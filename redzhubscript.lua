@@ -1,5 +1,18 @@
 Settings = Settings or {}
 
+-- Compatibility Layer
+local hookfunction = hookfunction or function() end
+local sethiddenproperty = sethiddenproperty or function() end
+local setfpscap = setfpscap or function() end
+local getgc = getgc or function() return {} end
+local getupvalues = getupvalues or function() return {} end
+local setupvalue = setupvalue or function() end
+local cloneref = cloneref or function(v) return v end
+local getclipboard = getclipboard or function() return "" end
+local isfile = isfile or function() return false end
+local readfile = readfile or function() return "" end
+local writefile = writefile or function() end
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
@@ -919,8 +932,8 @@ function UpdateIslandESP()
                             v20.Adornee = l_v18_0
                             v20.AlwaysOnTop = true
                             local v21 = Instance.new("TextLabel", v20)
-                            v21.Font = "GothamSemibold"
-                            v21.FontSize = "Size14"
+                            v21.Font = Enum.Font.GothamSemibold
+                            v21.FontSize = Enum.FontSize.Size14
                             v21.TextWrapped = true
                             v21.Size = UDim2.new(1, 0, 1, 0)
                             v21.TextYAlignment = "Top"
@@ -964,7 +977,7 @@ function UpdatePlayerChams()
                         v30.AlwaysOnTop = true
                         local v31 = Instance.new("TextLabel", v30)
                         v31.Font = Enum.Font.GothamSemibold
-                        v31.FontSize = "Size14"
+                        v31.FontSize = Enum.FontSize.Size14
                         v31.TextWrapped = true
                         v31.Text = l_v28_0.Name .. " \n" .. v26((game:GetService("Players").LocalPlayer.Character.Head.Position - l_v28_0.Character.Head.Position).Magnitude / 3) .. " Distance"
                         v31.Size = UDim2.new(1, 0, 1, 0)
@@ -999,8 +1012,8 @@ function UpdateChestESP()
                             v35.Adornee = l_v33_0
                             v35.AlwaysOnTop = true
                             local v36 = Instance.new("TextLabel", v35)
-                            v36.Font = "Code"
-                            v36.FontSize = "Size14"
+                            v36.Font = Enum.Font.Code
+                            v36.FontSize = Enum.FontSize.Size14
                             v36.TextWrapped = true
                             v36.Size = UDim2.new(1, 0, 1, 0)
                             v36.TextYAlignment = "Top"
@@ -1085,7 +1098,7 @@ function UpdateFlowerChams()
                             v47.AlwaysOnTop = true
                             local v48 = Instance.new("TextLabel", v47)
                             v48.Font = Enum.Font.GothamSemibold
-                            v48.FontSize = "Size14"
+                            v48.FontSize = Enum.FontSize.Size14
                             v48.TextWrapped = true
                             v48.Size = UDim2.new(1, 0, 1, 0)
                             v48.TextYAlignment = "Top"
@@ -1127,7 +1140,7 @@ function UpdateRealFruitChams()
                 v51.AlwaysOnTop = true
                 local v52 = Instance.new("TextLabel", v51)
                 v52.Font = Enum.Font.GothamSemibold
-                v52.FontSize = "Size14"
+                v52.FontSize = Enum.FontSize.Size14
                 v52.TextWrapped = true
                 v52.Size = UDim2.new(1, 0, 1, 0)
                 v52.TextYAlignment = "Top"
@@ -1152,7 +1165,7 @@ function UpdateRealFruitChams()
                     v55.AlwaysOnTop = true
                     local v56 = Instance.new("TextLabel", v55)
                     v56.Font = Enum.Font.GothamSemibold
-                    v56.FontSize = "Size14"
+                    v56.FontSize = Enum.FontSize.Size14
                     v56.TextWrapped = true
                     v56.Size = UDim2.new(1, 0, 1, 0)
                     v56.TextYAlignment = "Top"
@@ -1178,7 +1191,7 @@ function UpdateRealFruitChams()
                     v59.AlwaysOnTop = true
                     local v60 = Instance.new("TextLabel", v59)
                     v60.Font = Enum.Font.GothamSemibold
-                    v60.FontSize = "Size14"
+                    v60.FontSize = Enum.FontSize.Size14
                     v60.TextWrapped = true
                     v60.Size = UDim2.new(1, 0, 1, 0)
                     v60.TextYAlignment = "Top"
@@ -1210,8 +1223,8 @@ function UpdateIslandESP()
                             v64.Adornee = l_v62_0
                             v64.AlwaysOnTop = true
                             local v65 = Instance.new("TextLabel", v64)
-                            v65.Font = "GothamSemibold"
-                            v65.FontSize = "Size14"
+                            v65.Font = Enum.Font.GothamSemibold
+                            v65.FontSize = Enum.FontSize.Size14
                             v65.TextWrapped = true
                             v65.Size = UDim2.new(1, 0, 1, 0)
                             v65.TextYAlignment = "Top"
@@ -1335,8 +1348,8 @@ function UpdateChestESP()
                             v80.Adornee = l_v77_0
                             v80.AlwaysOnTop = true
                             local v81 = Instance.new("TextLabel", v80)
-                            v81.Font = "Code"
-                            v81.FontSize = "Size14"
+                            v81.Font = Enum.Font.Code
+                            v81.FontSize = Enum.FontSize.Size14
                             v81.TextWrapped = true
                             v81.Size = UDim2.new(1, 0, 1, 0)
                             v81.TextYAlignment = "Top"
@@ -1421,7 +1434,7 @@ function UpdateFlowerChams()
                         v91.AlwaysOnTop = true
                         local v92 = Instance.new("TextLabel", v91)
                         v92.Font = Enum.Font.GothamSemibold
-                        v92.FontSize = "Size14"
+                        v92.FontSize = Enum.FontSize.Size14
                         v92.TextWrapped = true
                         v92.Size = UDim2.new(1, 0, 1, 0)
                         v92.TextYAlignment = "Top"
@@ -1460,7 +1473,7 @@ function UpdateRealFruitChams()
                 v95.AlwaysOnTop = true
                 local v96 = Instance.new("TextLabel", v95)
                 v96.Font = Enum.Font.GothamSemibold
-                v96.FontSize = "Size14"
+                v96.FontSize = Enum.FontSize.Size14
                 v96.TextWrapped = true
                 v96.Size = UDim2.new(1, 0, 1, 0)
                 v96.TextYAlignment = "Top"
@@ -1483,7 +1496,7 @@ function UpdateRealFruitChams()
                     v99.AlwaysOnTop = true
                     local v100 = Instance.new("TextLabel", v99)
                     v100.Font = Enum.Font.GothamSemibold
-                    v100.FontSize = "Size14"
+                    v100.FontSize = Enum.FontSize.Size14
                     v100.TextWrapped = true
                     v100.Size = UDim2.new(1, 0, 1, 0)
                     v100.TextYAlignment = "Top"
@@ -1514,7 +1527,7 @@ function UpdateRealFruitChams()
                 v103.AlwaysOnTop = true
                 local v104 = Instance.new("TextLabel", v103)
                 v104.Font = Enum.Font.GothamSemibold
-                v104.FontSize = "Size14"
+                v104.FontSize = Enum.FontSize.Size14
                 v104.TextWrapped = true
                 v104.Size = UDim2.new(1, 0, 1, 0)
                 v104.TextYAlignment = "Top"
@@ -1548,8 +1561,8 @@ function UpdateIslandESP()
                         v108.Adornee = l_v106_0
                         v108.AlwaysOnTop = true
                         local v109 = Instance.new("TextLabel", v108)
-                        v109.Font = "GothamSemibold"
-                        v109.FontSize = "Size14"
+                        v109.Font = Enum.Font.GothamSemibold
+                        v109.FontSize = Enum.FontSize.Size14
                         v109.TextWrapped = true
                         v109.Size = UDim2.new(1, 0, 1, 0)
                         v109.TextYAlignment = "Top"
@@ -1587,7 +1600,7 @@ function UpdatePlayerChams()
                             v118.AlwaysOnTop = true
                             local v119 = Instance.new("TextLabel", v118)
                             v119.Font = Enum.Font.GothamSemibold
-                            v119.FontSize = "Size14"
+                            v119.FontSize = Enum.FontSize.Size14
                             v119.TextWrapped = true
                             v119.Text = l_v116_0.Name .. " \n" .. v114((game:GetService("Players").LocalPlayer.Character.Head.Position - l_v116_0.Character.Head.Position).Magnitude / 3) .. " Distance"
                             v119.Size = UDim2.new(1, 0, 1, 0)
@@ -1626,8 +1639,8 @@ function UpdateChestESP()
                             v124.Adornee = l_v121_0
                             v124.AlwaysOnTop = true
                             local v125 = Instance.new("TextLabel", v124)
-                            v125.Font = "Code"
-                            v125.FontSize = "Size14"
+                            v125.Font = Enum.Font.Code
+                            v125.FontSize = Enum.FontSize.Size14
                             v125.TextWrapped = true
                             v125.Size = UDim2.new(1, 0, 1, 0)
                             v125.TextYAlignment = "Top"
@@ -1667,7 +1680,7 @@ function UpdateDevilChams()
                         v130.AlwaysOnTop = true
                         local v131 = Instance.new("TextLabel", v130)
                         v131.Font = Enum.Font.GothamSemibold
-                        v131.FontSize = "Size14"
+                        v131.FontSize = Enum.FontSize.Size14
                         v131.TextWrapped = true
                         v131.Size = UDim2.new(1, 0, 1, 0)
                         v131.TextYAlignment = "Top"
@@ -1699,7 +1712,7 @@ function UpdateFlowerChams()
                             v135.AlwaysOnTop = true
                             local v136 = Instance.new("TextLabel", v135)
                             v136.Font = Enum.Font.GothamSemibold
-                            v136.FontSize = "Size14"
+                            v136.FontSize = Enum.FontSize.Size14
                             v136.TextWrapped = true
                             v136.Size = UDim2.new(1, 0, 1, 0)
                             v136.TextYAlignment = "Top"
@@ -1738,7 +1751,7 @@ function UpdateRealFruitChams()
                     v139.AlwaysOnTop = true
                     local v140 = Instance.new("TextLabel", v139)
                     v140.Font = Enum.Font.GothamSemibold
-                    v140.FontSize = "Size14"
+                    v140.FontSize = Enum.FontSize.Size14
                     v140.TextWrapped = true
                     v140.Size = UDim2.new(1, 0, 1, 0)
                     v140.TextYAlignment = "Top"
@@ -1766,7 +1779,7 @@ function UpdateRealFruitChams()
                     v143.AlwaysOnTop = true
                     local v144 = Instance.new("TextLabel", v143)
                     v144.Font = Enum.Font.GothamSemibold
-                    v144.FontSize = "Size14"
+                    v144.FontSize = Enum.FontSize.Size14
                     v144.TextWrapped = true
                     v144.Size = UDim2.new(1, 0, 1, 0)
                     v144.TextYAlignment = "Top"
@@ -1795,7 +1808,7 @@ function UpdateRealFruitChams()
                 v147.AlwaysOnTop = true
                 local v148 = Instance.new("TextLabel", v147)
                 v148.Font = Enum.Font.GothamSemibold
-                v148.FontSize = "Size14"
+                v148.FontSize = Enum.FontSize.Size14
                 v148.TextWrapped = true
                 v148.Size = UDim2.new(1, 0, 1, 0)
                 v148.TextYAlignment = "Top"
@@ -1826,8 +1839,8 @@ function UpdateIslandESP()
                             v152.Adornee = l_v150_0
                             v152.AlwaysOnTop = true
                             local v153 = Instance.new("TextLabel", v152)
-                            v153.Font = "GothamSemibold"
-                            v153.FontSize = "Size14"
+                            v153.Font = Enum.Font.GothamSemibold
+                            v153.FontSize = Enum.FontSize.Size14
                             v153.TextWrapped = true
                             v153.Size = UDim2.new(1, 0, 1, 0)
                             v153.TextYAlignment = "Top"
@@ -1871,7 +1884,7 @@ function UpdatePlayerChams()
                         v162.AlwaysOnTop = true
                         local v163 = Instance.new("TextLabel", v162)
                         v163.Font = Enum.Font.GothamSemibold
-                        v163.FontSize = "Size14"
+                        v163.FontSize = Enum.FontSize.Size14
                         v163.TextWrapped = true
                         v163.Text = l_v160_0.Name .. " \n" .. v158((game:GetService("Players").LocalPlayer.Character.Head.Position - l_v160_0.Character.Head.Position).Magnitude / 3) .. " Distance"
                         v163.Size = UDim2.new(1, 0, 1, 0)
@@ -1907,8 +1920,8 @@ function UpdateChestESP()
                             v168.Adornee = l_v165_0
                             v168.AlwaysOnTop = true
                             local v169 = Instance.new("TextLabel", v168)
-                            v169.Font = "Code"
-                            v169.FontSize = "Size14"
+                            v169.Font = Enum.Font.Code
+                            v169.FontSize = Enum.FontSize.Size14
                             v169.TextWrapped = true
                             v169.Size = UDim2.new(1, 0, 1, 0)
                             v169.TextYAlignment = "Top"
@@ -1945,7 +1958,7 @@ function UpdateDevilChams()
                             v174.AlwaysOnTop = true
                             local v175 = Instance.new("TextLabel", v174)
                             v175.Font = Enum.Font.GothamSemibold
-                            v175.FontSize = "Size14"
+                            v175.FontSize = Enum.FontSize.Size14
                             v175.TextWrapped = true
                             v175.Size = UDim2.new(1, 0, 1, 0)
                             v175.TextYAlignment = "Top"
@@ -1983,7 +1996,7 @@ function UpdateFlowerChams()
                         v179.AlwaysOnTop = true
                         local v180 = Instance.new("TextLabel", v179)
                         v180.Font = Enum.Font.GothamSemibold
-                        v180.FontSize = "Size14"
+                        v180.FontSize = Enum.FontSize.Size14
                         v180.TextWrapped = true
                         v180.Size = UDim2.new(1, 0, 1, 0)
                         v180.TextYAlignment = "Top"
@@ -2019,7 +2032,7 @@ function UpdateRealFruitChams()
                     v183.AlwaysOnTop = true
                     local v184 = Instance.new("TextLabel", v183)
                     v184.Font = Enum.Font.GothamSemibold
-                    v184.FontSize = "Size14"
+                    v184.FontSize = Enum.FontSize.Size14
                     v184.TextWrapped = true
                     v184.Size = UDim2.new(1, 0, 1, 0)
                     v184.TextYAlignment = "Top"
@@ -2045,7 +2058,7 @@ function UpdateRealFruitChams()
                     v187.AlwaysOnTop = true
                     local v188 = Instance.new("TextLabel", v187)
                     v188.Font = Enum.Font.GothamSemibold
-                    v188.FontSize = "Size14"
+                    v188.FontSize = Enum.FontSize.Size14
                     v188.TextWrapped = true
                     v188.Size = UDim2.new(1, 0, 1, 0)
                     v188.TextYAlignment = "Top"
@@ -2075,7 +2088,7 @@ function UpdateRealFruitChams()
                     v191.AlwaysOnTop = true
                     local v192 = Instance.new("TextLabel", v191)
                     v192.Font = Enum.Font.GothamSemibold
-                    v192.FontSize = "Size14"
+                    v192.FontSize = Enum.FontSize.Size14
                     v192.TextWrapped = true
                     v192.Size = UDim2.new(1, 0, 1, 0)
                     v192.TextYAlignment = "Top"
@@ -2110,8 +2123,8 @@ function UpdateIslandESP()
                         v196.Adornee = l_v194_0
                         v196.AlwaysOnTop = true
                         local v197 = Instance.new("TextLabel", v196)
-                        v197.Font = "GothamSemibold"
-                        v197.FontSize = "Size14"
+                        v197.Font = Enum.Font.GothamSemibold
+                        v197.FontSize = Enum.FontSize.Size14
                         v197.TextWrapped = true
                         v197.Size = UDim2.new(1, 0, 1, 0)
                         v197.TextYAlignment = "Top"
@@ -2149,7 +2162,7 @@ function UpdatePlayerChams()
                             v206.AlwaysOnTop = true
                             local v207 = Instance.new("TextLabel", v206)
                             v207.Font = Enum.Font.GothamSemibold
-                            v207.FontSize = "Size14"
+                            v207.FontSize = Enum.FontSize.Size14
                             v207.TextWrapped = true
                             v207.Text = l_v204_0.Name .. " \n" .. v202((game:GetService("Players").LocalPlayer.Character.Head.Position - l_v204_0.Character.Head.Position).Magnitude / 3) .. " Distance"
                             v207.Size = UDim2.new(1, 0, 1, 0)
@@ -2185,8 +2198,8 @@ function UpdateChestESP()
                             v211.Adornee = l_v209_0
                             v211.AlwaysOnTop = true
                             local v212 = Instance.new("TextLabel", v211)
-                            v212.Font = "Code"
-                            v212.FontSize = "Size14"
+                            v212.Font = Enum.Font.Code
+                            v212.FontSize = Enum.FontSize.Size14
                             v212.TextWrapped = true
                             v212.Size = UDim2.new(1, 0, 1, 0)
                             v212.TextYAlignment = "Top"
@@ -2229,7 +2242,7 @@ function UpdateDevilChams()
                         v218.AlwaysOnTop = true
                         local v219 = Instance.new("TextLabel", v218)
                         v219.Font = Enum.Font.GothamSemibold
-                        v219.FontSize = "Size14"
+                        v219.FontSize = Enum.FontSize.Size14
                         v219.TextWrapped = true
                         v219.Size = UDim2.new(1, 0, 1, 0)
                         v219.TextYAlignment = "Top"
@@ -2264,7 +2277,7 @@ function UpdateFlowerChams()
                         v223.AlwaysOnTop = true
                         local v224 = Instance.new("TextLabel", v223)
                         v224.Font = Enum.Font.GothamSemibold
-                        v224.FontSize = "Size14"
+                        v224.FontSize = Enum.FontSize.Size14
                         v224.TextWrapped = true
                         v224.Size = UDim2.new(1, 0, 1, 0)
                         v224.TextYAlignment = "Top"
@@ -2303,7 +2316,7 @@ function UpdateRealFruitChams()
                 v227.AlwaysOnTop = true
                 local v228 = Instance.new("TextLabel", v227)
                 v228.Font = Enum.Font.GothamSemibold
-                v228.FontSize = "Size14"
+                v228.FontSize = Enum.FontSize.Size14
                 v228.TextWrapped = true
                 v228.Size = UDim2.new(1, 0, 1, 0)
                 v228.TextYAlignment = "Top"
@@ -2328,7 +2341,7 @@ function UpdateRealFruitChams()
                     v231.AlwaysOnTop = true
                     local v232 = Instance.new("TextLabel", v231)
                     v232.Font = Enum.Font.GothamSemibold
-                    v232.FontSize = "Size14"
+                    v232.FontSize = Enum.FontSize.Size14
                     v232.TextWrapped = true
                     v232.Size = UDim2.new(1, 0, 1, 0)
                     v232.TextYAlignment = "Top"
@@ -2354,7 +2367,7 @@ function UpdateRealFruitChams()
                     v235.AlwaysOnTop = true
                     local v236 = Instance.new("TextLabel", v235)
                     v236.Font = Enum.Font.GothamSemibold
-                    v236.FontSize = "Size14"
+                    v236.FontSize = Enum.FontSize.Size14
                     v236.TextWrapped = true
                     v236.Size = UDim2.new(1, 0, 1, 0)
                     v236.TextYAlignment = "Top"
@@ -2388,8 +2401,8 @@ function UpdateIslandESP()
                             v240.Adornee = l_v238_0
                             v240.AlwaysOnTop = true
                             local v241 = Instance.new("TextLabel", v240)
-                            v241.Font = "GothamSemibold"
-                            v241.FontSize = "Size14"
+                            v241.Font = Enum.Font.GothamSemibold
+                            v241.FontSize = Enum.FontSize.Size14
                             v241.TextWrapped = true
                             v241.Size = UDim2.new(1, 0, 1, 0)
                             v241.TextYAlignment = "Top"
@@ -2428,7 +2441,7 @@ function UpdatePlayerChams()
                             v250.AlwaysOnTop = true
                             local v251 = Instance.new("TextLabel", v250)
                             v251.Font = Enum.Font.GothamSemibold
-                            v251.FontSize = "Size14"
+                            v251.FontSize = Enum.FontSize.Size14
                             v251.TextWrapped = true
                             v251.Text = l_v248_0.Name .. " \n" .. v246((game:GetService("Players").LocalPlayer.Character.Head.Position - l_v248_0.Character.Head.Position).Magnitude / 3) .. " Distance"
                             v251.Size = UDim2.new(1, 0, 1, 0)
@@ -2469,8 +2482,8 @@ function UpdateChestESP()
                             v256.Adornee = l_v253_0
                             v256.AlwaysOnTop = true
                             local v257 = Instance.new("TextLabel", v256)
-                            v257.Font = "Code"
-                            v257.FontSize = "Size14"
+                            v257.Font = Enum.Font.Code
+                            v257.FontSize = Enum.FontSize.Size14
                             v257.TextWrapped = true
                             v257.Size = UDim2.new(1, 0, 1, 0)
                             v257.TextYAlignment = "Top"
@@ -2510,7 +2523,7 @@ function UpdateDevilChams()
                         v262.AlwaysOnTop = true
                         local v263 = Instance.new("TextLabel", v262)
                         v263.Font = Enum.Font.GothamSemibold
-                        v263.FontSize = "Size14"
+                        v263.FontSize = Enum.FontSize.Size14
                         v263.TextWrapped = true
                         v263.Size = UDim2.new(1, 0, 1, 0)
                         v263.TextYAlignment = "Top"
@@ -2542,7 +2555,7 @@ function UpdateFlowerChams()
                             v267.AlwaysOnTop = true
                             local v268 = Instance.new("TextLabel", v267)
                             v268.Font = Enum.Font.GothamSemibold
-                            v268.FontSize = "Size14"
+                            v268.FontSize = Enum.FontSize.Size14
                             v268.TextWrapped = true
                             v268.Size = UDim2.new(1, 0, 1, 0)
                             v268.TextYAlignment = "Top"
@@ -2579,7 +2592,7 @@ function UpdateRealFruitChams()
                     v271.AlwaysOnTop = true
                     local v272 = Instance.new("TextLabel", v271)
                     v272.Font = Enum.Font.GothamSemibold
-                    v272.FontSize = "Size14"
+                    v272.FontSize = Enum.FontSize.Size14
                     v272.TextWrapped = true
                     v272.Size = UDim2.new(1, 0, 1, 0)
                     v272.TextYAlignment = "Top"
@@ -2610,7 +2623,7 @@ function UpdateRealFruitChams()
                 v275.AlwaysOnTop = true
                 local v276 = Instance.new("TextLabel", v275)
                 v276.Font = Enum.Font.GothamSemibold
-                v276.FontSize = "Size14"
+                v276.FontSize = Enum.FontSize.Size14
                 v276.TextWrapped = true
                 v276.Size = UDim2.new(1, 0, 1, 0)
                 v276.TextYAlignment = "Top"
@@ -2635,7 +2648,7 @@ function UpdateRealFruitChams()
                     v279.AlwaysOnTop = true
                     local v280 = Instance.new("TextLabel", v279)
                     v280.Font = Enum.Font.GothamSemibold
-                    v280.FontSize = "Size14"
+                    v280.FontSize = Enum.FontSize.Size14
                     v280.TextWrapped = true
                     v280.Size = UDim2.new(1, 0, 1, 0)
                     v280.TextYAlignment = "Top"
@@ -2796,8 +2809,8 @@ function UpdateIslandMirageESP()
                         v310.Adornee = l_v308_0
                         v310.AlwaysOnTop = true
                         local v311 = Instance.new("TextLabel", v310)
-                        v311.Font = "Code"
-                        v311.FontSize = "Size14"
+                        v311.Font = Enum.Font.Code
+                        v311.FontSize = Enum.FontSize.Size14
                         v311.TextWrapped = true
                         v311.Size = UDim2.new(1, 0, 1, 0)
                         v311.TextYAlignment = "Top"
@@ -2828,8 +2841,8 @@ function UpdatePrehistoricIslandESP()
                         v315.Adornee = l_v313_0
                         v315.AlwaysOnTop = true
                         local v316 = Instance.new("TextLabel", v315)
-                        v316.Font = "Code"
-                        v316.FontSize = "Size14"
+                        v316.Font = Enum.Font.Code
+                        v316.FontSize = Enum.FontSize.Size14
                         v316.TextWrapped = true
                         v316.Size = UDim2.new(1, 0, 1, 0)
                         v316.TextYAlignment = "Top"
@@ -2864,8 +2877,8 @@ function UpdateAfdESP()
                         v320.Adornee = l_v318_0
                         v320.AlwaysOnTop = true
                         local v321 = Instance.new("TextLabel", v320)
-                        v321.Font = "Code"
-                        v321.FontSize = "Size14"
+                        v321.Font = Enum.Font.Code
+                        v321.FontSize = Enum.FontSize.Size14
                         v321.TextWrapped = true
                         v321.Size = UDim2.new(1, 0, 1, 0)
                         v321.TextYAlignment = "Top"
@@ -2895,8 +2908,8 @@ function UpdateAuraESP()
                             v325.Adornee = l_v323_0
                             v325.AlwaysOnTop = true
                             local v326 = Instance.new("TextLabel", v325)
-                            v326.Font = "Code"
-                            v326.FontSize = "Size14"
+                            v326.Font = Enum.Font.Code
+                            v326.FontSize = Enum.FontSize.Size14
                             v326.TextWrapped = true
                             v326.Size = UDim2.new(1, 0, 1, 0)
                             v326.TextYAlignment = "Top"
@@ -2929,8 +2942,8 @@ function UpdateLSDESP()
                             v330.Adornee = l_v328_0
                             v330.AlwaysOnTop = true
                             local v331 = Instance.new("TextLabel", v330)
-                            v331.Font = "Code"
-                            v331.FontSize = "Size14"
+                            v331.Font = Enum.Font.Code
+                            v331.FontSize = Enum.FontSize.Size14
                             v331.TextWrapped = true
                             v331.Size = UDim2.new(1, 0, 1, 0)
                             v331.TextYAlignment = "Top"
@@ -3002,8 +3015,8 @@ function UpdateGeaESP()
                         v337.Adornee = l_v335_0
                         v337.AlwaysOnTop = true
                         local v338 = Instance.new("TextLabel", v337)
-                        v338.Font = "Code"
-                        v338.FontSize = "Size14"
+                        v338.Font = Enum.Font.Code
+                        v338.FontSize = Enum.FontSize.Size14
                         v338.TextWrapped = true
                         v338.Size = UDim2.new(1, 0, 1, 0)
                         v338.TextYAlignment = "Top"
@@ -3082,8 +3095,8 @@ function UpdateIslandKisuneESP()
                         v353.Adornee = l_v351_0
                         v353.AlwaysOnTop = true
                         local v354 = Instance.new("TextLabel", v353)
-                        v354.Font = "Code"
-                        v354.FontSize = "Size14"
+                        v354.Font = Enum.Font.Code
+                        v354.FontSize = Enum.FontSize.Size14
                         v354.TextWrapped = true
                         v354.Size = UDim2.new(1, 0, 1, 0)
                         v354.TextYAlignment = "Top"
@@ -3706,7 +3719,7 @@ function CheckItemBPCRBPCR(v463)
         end
     end
 end
-local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Library-ui/refs/heads/main/redz-V5-remake/main.luau"))()
+local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Library/refs/heads/main/redz-V5-remake/main.luau"))()
 local v466 = vu32:MakeWindow({
     Title = "redz hub [ BETA ACCESS ] : Blox Fruits",
     SubTitle = "remake version",
@@ -9475,7 +9488,7 @@ v494:AddToggle({
     end
 })
 
-    v494:AddSection("Visual")
+    v494:AddSection({"Visual"})
 local vu14 = game.Players.LocalPlayer
 
 v494:AddButton({
@@ -10202,7 +10215,7 @@ spawn(function()
         pcall(function()
             CheckQuest()
             for _, v1167 in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
-                if _G.BringMonster and (StartBring and v1167.Name == MonFarm or v1167.Name == Mon and v1167:FindFirstChild("Humanoid") and v1167:FindFirstChild("HumanoidRootPart") and v1167.Humanoid.Health > 0 and (v1167.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 320) then
+                if _G.BringMonster and (v1167:FindFirstChild("Humanoid") and v1167:FindFirstChild("HumanoidRootPart") and v1167.Humanoid.Health > 0) and (StartBring and v1167.Name == MonFarm or v1167.Name == Mon and (v1167.HumanoidRootPart.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 320) then
                     if v1167.Name == "Factory Staff" then
                         if (v1167.HumanoidRootPart.Position - PosMon.Position).Magnitude <= 250 then
                             v1167.Head.CanCollide = false
@@ -10230,7 +10243,7 @@ spawn(function()
     end
 end)
 
-v496:AddSection("Server")
+v496:AddSection({"Server"})
 v496:AddButton({
     Title = "Rejoin Server",
     Callback = function()
@@ -10305,7 +10318,7 @@ v496:AddToggle({
     end
 })
 
-v496:AddSection("Team")
+v496:AddSection({"Team"})
 v496:AddButton({
     Title = "Join Pirates Team",
     Callback = function()
@@ -10319,7 +10332,7 @@ v496:AddButton({
     end
 })
 
-v496:AddSection("Race")
+v496:AddSection({"Race"})
 v496:AddToggle({
     Title = "Auto Active Race V3",
     Description = "",
@@ -10389,7 +10402,7 @@ spawn(function()
     end
 end)
 
-v496:AddSection("Menu")
+v496:AddSection({"Menu"})
 v496:AddButton({
     Title = "Open Title Name",
     Callback = function()
@@ -10399,7 +10412,7 @@ v496:AddButton({
     end
 })
 
-v496:AddSection("Local-Player")
+v496:AddSection({"Local-Player"})
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -10518,7 +10531,7 @@ v496:AddSlider({
 	end
 })
 
-v496:AddSection("Visual")
+v496:AddSection({"Visual"})
 local Lighting = game:GetService("Lighting")
 local FULLBRIGHT_SAVE_FILE = "fullbright_save.txt"
 
@@ -10601,7 +10614,7 @@ v496:AddButton({
 	end
 })
 
-v496:AddSection("Others")
+v496:AddSection({"Others"})
 
 v496:AddToggle({
     Name = "Delete Lava",
@@ -10840,4 +10853,4 @@ task.spawn(function()
     end
 end)
 
-return redzlib
+return true
