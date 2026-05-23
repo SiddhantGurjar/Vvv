@@ -18,6 +18,22 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local round = math.round or function(v) return math.floor(v + 0.5) end
 
+local function safeload(url)
+    local success, result = pcall(function()
+        local code = game:HttpGet(url)
+        local func, err = loadstring(code)
+        if not func then 
+            warn("Failed to compile " .. url .. ": " .. tostring(err))
+            return nil 
+        end
+        return func()
+    end)
+    if not success then
+        warn("Failed to load " .. url .. ": " .. tostring(result))
+    end
+    return result
+end
+
 local Plr = Players.LocalPlayer
 
 if Settings.Translator == true then
@@ -3719,7 +3735,7 @@ function CheckItemBPCRBPCR(v463)
         end
     end
 end
-local vu32 = loadstring(game:HttpGet("https://raw.githubusercontent.com/tlredz/Library/refs/heads/main/redz-V5-remake/main.luau"))()
+local vu32 = safeload("https://raw.githubusercontent.com/tlredz/Library/refs/heads/main/redz-V5-remake/main.luau")
 local v466 = vu32:MakeWindow({
     Title = "redz hub [ BETA ACCESS ] : Blox Fruits",
     SubTitle = "remake version",
@@ -8980,7 +8996,7 @@ v497:AddToggle({
 
 local _ = v494:AddSection({"Aimbot Nearest"})
 
-local v1 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Aimbot-skill-config/refs/heads/main/Aimbot.lua"))()
+local v1 = safeload("https://raw.githubusercontent.com/PlockScripts/Aimbot-skill-config/refs/heads/main/Aimbot.lua")
 
 local AimbotEnabled = false
 local AimPlayers = false
@@ -9081,7 +9097,7 @@ v494:AddToggle({
 })
 
 local _ = v494:AddSection({"Aimbot skill V2"})
-local v1 = loadstring(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/Aimbot-skill-config/refs/heads/main/Aimbot.lua"))()
+local v1 = safeload("https://raw.githubusercontent.com/PlockScripts/Aimbot-skill-config/refs/heads/main/Aimbot.lua")
 
 local AimbotEnabled = false
 local AimPlayers = false
