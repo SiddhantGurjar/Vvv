@@ -1,125 +1,120 @@
--- Safety and Compatibility Layer
-if not game:IsLoaded() then
-    pcall(function() game.Loaded:Wait() end)
-end
-
-local getgenv = (function()
-    local success, env = pcall(getgenv)
-    if success and env then return env end
-    return _G
-end)()
-
-local Players = game:GetService("Players")
-local Plr = Players.LocalPlayer
-while not Plr do
-    task.wait()
-    Plr = Players.LocalPlayer
-end
-
-local old_loadstring = loadstring
-getgenv().loadstring = function(code, chunkname)
-    if not code or code == "" then return function() end end
-    if not old_loadstring then 
-        warn("loadstring is not supported in this environment")
-        return function() end 
+--[[ FIXED HUB ]]
+local success, err = pcall(function()
+    local function get_env()
+        local success, env = pcall(getgenv)
+        if success and type(env) == "table" then return env end
+        return _G
     end
-    local success, func = pcall(old_loadstring, code, chunkname)
-    if not success or not func then
-        warn("Loadstring error: " .. tostring(func or "unknown error"))
-        return function() end
+    local env = get_env()
+
+    local function get_service(name)
+        local success, service = pcall(game.GetService, game, name)
+        if success then return service end
+        return nil
     end
-    return func
-end
 
-getgenv().HttpGet = getgenv().HttpGet or function(self, url)
-    if type(self) == "string" then url = self end
-    local success, res = pcall(function() return game:HttpGet(url) end)
-    if success then return res end
-    warn("HttpGet failed: " .. tostring(res))
-    return ""
-end
+    local Players = get_service("Players")
+    local HttpService = get_service("HttpService")
+    local ReplicatedStorage = get_service("ReplicatedStorage")
+    local RunService = get_service("RunService")
 
-local old_require = require
-getgenv().require = function(module)
-    if not old_require then return setmetatable({}, {__index = function() return function() end end}) end
-    local success, result = pcall(old_require, module)
-    if not success then
-        warn("Require error on " .. tostring(module) .. ": " .. tostring(result))
+    local wait = (task and task.wait) or wait
+    local spawn = (task and task.spawn) or spawn
+
+    if game and game.IsLoaded and not game:IsLoaded() then
+        pcall(function() game.Loaded:Wait() end)
+    end
+
+    local Plr = Players and Players.LocalPlayer
+    if Players and not Plr then
+        local start = tick()
+        repeat
+            wait()
+            Plr = Players.LocalPlayer
+        until Plr or (tick() - start > 10)
+    end
+
+    local old_loadstring = loadstring
+    env.loadstring = function(code, chunkname)
+        if not code or code == "" then return function() end end
+        if not old_loadstring then return function() end end
+        local success, func = pcall(old_loadstring, code, chunkname)
+        if not success or not func then return function() end end
+        return func
+    end
+
+    env.HttpGet = env.HttpGet or function(self, url)
+        if type(self) == "string" then url = self end
+        local success, res = pcall(function() return game:HttpGet(url) end)
+        return success and res or ""
+    end
+
+    local function safeload(url)
+        local success, result = pcall(function()
+            local code = env.HttpGet(url)
+            local func = env.loadstring(code, url)
+            if func then
+                local res = func()
+                return res
+            end
+        end)
+        if success and result ~= nil then return result end
         return setmetatable({}, {__index = function() return function() end end})
     end
-    return result
-end
 
-if not getgenv().Settings then getgenv().Settings = {} end
-local Settings = getgenv().Settings
+    if not env.Settings then env.Settings = {} end
+    local Settings = env.Settings
 
--- Compatibility Layer
-local hookfunction = getgenv().hookfunction or function() end
-local sethiddenproperty = getgenv().sethiddenproperty or function() end
-local setfpscap = getgenv().setfpscap or function() end
-local getgc = getgenv().getgc or function() return {} end
-local getupvalues = getgenv().getupvalues or function() return {} end
-local setupvalue = getgenv().setupvalue or function() end
-local cloneref = getgenv().cloneref or function(v) return v end
-local getclipboard = getgenv().getclipboard or function() return "" end
-local isfile = getgenv().isfile or function() return false end
-local readfile = getgenv().readfile or function() return "" end
-local writefile = getgenv().writefile or function() end
+    local hookfunction = env.hookfunction or function() end
+    local sethiddenproperty = env.sethiddenproperty or function() end
+    local setfpscap = env.setfpscap or function() end
+    local getgc = env.getgc or function() return {} end
+    local getupvalues = env.getupvalues or function() return {} end
+    local setupvalue = env.setupvalue or function() end
+    local cloneref = env.cloneref or function(v) return v end
+    local getclipboard = env.getclipboard or function() return "" end
+    local isfile = env.isfile or function() return false end
+    local readfile = env.readfile or function() return "" end
+    local writefile = env.writefile or function() end
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local HttpService = game:GetService("HttpService")
-local round = math.round or function(v) return math.floor(v + 0.5) end
+    local round = math.round or function(v) return math.floor(v + 0.5) end
 
-local function safeload(url)
-    local success, result = pcall(function()
-        local code = HttpGet(url)
-        return loadstring(code, url)()
-    end)
-    if not success then
-        warn("Safeload failure on " .. url .. ": " .. tostring(result))
-        return setmetatable({}, {__index = function() return function() end end})
-    end
-    return result
-end
-
-
-if Settings.Translator == true then
-    pcall(function()
-        _G.RedzTranslator = HttpService:JSONDecode(game:HttpGet("https://raw.githubusercontent.com/PlockScripts/newredz/refs/heads/main/NewTranslator/NewBloxFruits/NewPortuguese.json"))
-    end)
-end
-
-local function JoinTeam()
-    local targetTeam = "Marines"
-    if Settings.JoinTeam == "Pirates" then
-        targetTeam = "Pirates"
-    end
-
-    if not Plr.Team or (Plr.Team.Name ~= "Marines" and Plr.Team.Name ~= "Pirates") then
+    if Settings.Translator == true then
         pcall(function()
-            ReplicatedStorage
-                :WaitForChild("Remotes")
-                :WaitForChild("CommF_")
-                :InvokeServer("SetTeam", targetTeam)
+            _G.RedzTranslator = HttpService:JSONDecode(env.HttpGet("https://raw.githubusercontent.com/PlockScripts/newredz/refs/heads/main/NewTranslator/NewBloxFruits/NewPortuguese.json"))
         end)
     end
-end
 
-JoinTeam()
+    local function JoinTeam()
+        local targetTeam = "Marines"
+        if Settings.JoinTeam == "Pirates" then
+            targetTeam = "Pirates"
+        end
 
-hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death), function()
-    -- empty block
-end)
-hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function()
-    -- empty block
-end)
-if game.PlaceId == 2753915549 or game.PlaceId == 85211729168715 then
-    World1 = true
-elseif game.PlaceId == 4442272183 or game.PlaceId == 79091703265657 then
-    World2 = true
-elseif game.PlaceId == 7449423635 or game.PlaceId == 100117331123089 then
-    World3 = true
-end
+        if Plr and (not Plr.Team or (Plr.Team.Name ~= "Marines" and Plr.Team.Name ~= "Pirates")) then
+            pcall(function()
+                ReplicatedStorage
+                    :WaitForChild("Remotes")
+                    :WaitForChild("CommF_")
+                    :InvokeServer("SetTeam", targetTeam)
+            end)
+        end
+    end
+
+    JoinTeam()
+
+    hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Death), function() end)
+    hookfunction(require(game:GetService("ReplicatedStorage").Effect.Container.Respawn), function() end)
+
+    if game.PlaceId == 2753915549 or game.PlaceId == 85211729168715 then
+        env.World1 = true
+    elseif game.PlaceId == 4442272183 or game.PlaceId == 79091703265657 then
+        env.World2 = true
+    elseif game.PlaceId == 7449423635 or game.PlaceId == 100117331123089 then
+        env.World3 = true
+    end
+    local World1, World2, World3 = env.World1, env.World2, env.World3
+
 function MaterialMon()
     if _G.SelectMaterial ~= "Radiactive Material" then
         if _G.SelectMaterial ~= "Leather + Scrap Metal" then
@@ -10874,3 +10869,6 @@ task.spawn(function()
 end)
 
 return true
+
+end)
+if not success then warn("HUB ERROR: " .. tostring(err)) end
