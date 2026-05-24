@@ -1,33 +1,47 @@
-Settings = Settings or {}
+-- Safety and Compatibility Layer
+if not game:IsLoaded() then
+    pcall(function() game.Loaded:Wait() end)
+end
 
--- Compatibility Layer
-local hookfunction = hookfunction or function() end
-local sethiddenproperty = sethiddenproperty or function() end
-local setfpscap = setfpscap or function() end
-local getgc = getgc or function() return {} end
-local getupvalues = getupvalues or function() return {} end
-local setupvalue = setupvalue or function() end
-local cloneref = cloneref or function(v) return v end
-local getgenv = getgenv or function() return _G end
-local getclipboard = getclipboard or function() return "" end
-local isfile = isfile or function() return false end
-local readfile = readfile or function() return "" end
-local writefile = writefile or function() end
+local getgenv = (function()
+    local success, env = pcall(getgenv)
+    if success and env then return env end
+    return _G
+end)()
 
--- Global Safety Layer
+local Players = game:GetService("Players")
+local Plr = Players.LocalPlayer
+while not Plr do
+    task.wait()
+    Plr = Players.LocalPlayer
+end
+
 local old_loadstring = loadstring
 getgenv().loadstring = function(code, chunkname)
     if not code or code == "" then return function() end end
-    local func, err = old_loadstring(code, chunkname)
-    if not func then
-        warn("Loadstring error: " .. tostring(err))
+    if not old_loadstring then 
+        warn("loadstring is not supported in this environment")
+        return function() end 
+    end
+    local success, func = pcall(old_loadstring, code, chunkname)
+    if not success or not func then
+        warn("Loadstring error: " .. tostring(func or "unknown error"))
         return function() end
     end
     return func
 end
 
+getgenv().HttpGet = getgenv().HttpGet or function(self, url)
+    if type(self) == "string" then url = self end
+    local success, res = pcall(function() return game:HttpGet(url) end)
+    if success then return res end
+    warn("HttpGet failed: " .. tostring(res))
+    return ""
+end
+
 local old_require = require
 getgenv().require = function(module)
+    if not old_require then return setmetatable({}, {__index = function() return function() end end}) end
     local success, result = pcall(old_require, module)
     if not success then
         warn("Require error on " .. tostring(module) .. ": " .. tostring(result))
@@ -36,14 +50,29 @@ getgenv().require = function(module)
     return result
 end
 
-local Players = game:GetService("Players")
+if not getgenv().Settings then getgenv().Settings = {} end
+local Settings = getgenv().Settings
+
+-- Compatibility Layer
+local hookfunction = getgenv().hookfunction or function() end
+local sethiddenproperty = getgenv().sethiddenproperty or function() end
+local setfpscap = getgenv().setfpscap or function() end
+local getgc = getgenv().getgc or function() return {} end
+local getupvalues = getgenv().getupvalues or function() return {} end
+local setupvalue = getgenv().setupvalue or function() end
+local cloneref = getgenv().cloneref or function(v) return v end
+local getclipboard = getgenv().getclipboard or function() return "" end
+local isfile = getgenv().isfile or function() return false end
+local readfile = getgenv().readfile or function() return "" end
+local writefile = getgenv().writefile or function() end
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local HttpService = game:GetService("HttpService")
 local round = math.round or function(v) return math.floor(v + 0.5) end
 
 local function safeload(url)
     local success, result = pcall(function()
-        local code = game:HttpGet(url)
+        local code = HttpGet(url)
         return loadstring(code, url)()
     end)
     if not success then
@@ -53,7 +82,6 @@ local function safeload(url)
     return result
 end
 
-local Plr = Players.LocalPlayer
 
 if Settings.Translator == true then
     pcall(function()
